@@ -1,0 +1,36 @@
+.ng-valid[required],
+.ng-valid.required {
+  border-left: 5px solid #42a948; /* green */
+}
+
+.ng-invalid:not(form) {
+  border-left: 5px solid #a94442; /* red */
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  border-left: 5px solid #a94442;
+  border-right: 1px solid #ced4da;
+  border-top: 1px solid #ced4da;
+  border-bottom: 1px solid #ced4da;
+}
+input[type="date1"] {
+  border-left: 5px solid #42a948; /* green */
+}
+label {
+  margin-bottom: 0;
+}
+.form-control {
+  height: calc(0.7em + 0.75rem + 2px);
+  padding: 0;
+  border-radius: 0;
+}
+
+.form-check-input {
+  margin-left: 0;
+}
+.labelext {
+  margin-left: 20px;
+}
+.input-group-text {
+  height: 25.19px;
+}

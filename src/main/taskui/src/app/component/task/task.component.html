@@ -1,0 +1,175 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">{{taskaction}}</h5>
+      <div class="card-body">
+        <form #taskFormControl="ngForm">
+          <div class="form-row">
+            <div class="form-group col-4">
+              <input type="checkbox" class="form-check-input" id='isparenttask' name='isparenttask' >
+              <label class="labelext">Parent Task</label>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-4">
+              <input type="hidden" id="taskId" name="taskId" [(ngModel)]="taskForm.taskId"/>
+              <input type="hidden" id="status" name="status" [(ngModel)]="taskForm.status"/>
+              <label>Task</label>
+              <input type="text" class="form-control" id="task" name="task" [(ngModel)]="taskForm.task" required/>
+            </div>
+            <!--Project start-->
+            <div class="form-group col-4">
+              <label>Project</label>
+              <input type="hidden" class="form-control" id="projectId" name="projectId" [(ngModel)]="taskForm.projectId"
+                required readonly />
+              <div class="input-group mb-3" id="projectDiv">
+                <input type="text" data-toggle="modal" data-target="#myModalproject" class="form-control" id="project"
+                  name="project" [(ngModel)]="taskForm.project" required readonly />
+                <div class="input-group-prepend">
+                  <span class="input-group-text" data-toggle="modal" data-target="#myModalproject">Search</span>
+                </div>
+              </div>
+              <!-- Modal -->
+              <div class="modal fade" id="myModalproject" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Select Project</h5>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container">
+                        <input class="form-control" id="projectSearch" name="projectSearch" type="text"
+                          placeholder="Search..">
+                        <br>
+                        <ul class="list-group" id="projectNameList" name="projectNameList"
+                          *ngFor="let project of projectList; let i = index">
+                          <li class="list-group-item" *ngIf="project.status == 'Active'"><input type="radio"
+                              (click)="getProject(project)" data-dismiss="modal">{{project.project}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Model End-->
+            </div>
+            <!--Project End-->
+            <div class="form-group col-4">
+              <label>Priority</label>
+              <input type="range" min="1" max="30" value="0" class="form-control" id="priority" name="priority"
+                [(ngModel)]="taskForm.priority" required oninput="priorityOutputId.value = priority.value">
+              <output name="priorityOutputName" id="priorityOutputId">{{0}}</output>
+            </div>
+          </div>
+          <div class="form-row">
+            <!--Parent Start-->
+            <div class="form-group col-4">
+              <label>Parent Task</label>
+              <input type="hidden" class="form-control" id="parentId" name="parentId" [(ngModel)]="taskForm.parentId"
+                readonly />
+              <div class="input-group mb-3" id="parentDiv">
+                <input type="text" data-toggle="modal" data-target="#myModalParent" class="form-control" id="parentTask"
+                  name="parentTask" [(ngModel)]="taskForm.parentTask" readonly />
+                <div class="input-group-prepend">
+                  <span class="input-group-text" data-toggle="modal" data-target="#myModalParent">Search</span>
+                </div>
+              </div>
+              <!-- Modal -->
+              <div class="modal fade" id="myModalParent" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Select Parent Task</h5>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container">
+                        <input class="form-control" id="parentSearch" name="parentSearch" type="text"
+                          placeholder="Search..">
+                        <br>
+                        <ul class="list-group" id="parentNameList" name="parentNameList"
+                          *ngFor="let parent of parentList; let i = index">
+                          <li class="list-group-item">
+                            <input type="radio" (click)="getParent(parent)" 
+                              data-dismiss="modal">{{parent.parentTask}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Model End-->
+            </div>
+            <!--Parent End-->
+            <div class="form-group col-2">
+              <label>Start Date</label>
+              <input type="date" max={{taskForm.endDate}} data-date-format='YYYY-MM-DD' class="form-control"
+                id="startDate" name="startDate" [(ngModel)]="taskForm.startDate" required #startDate="ngModel"/>
+            </div>
+            <div class="form-group col-2">
+              <label>End Date</label>
+              <input type="date" min={{taskForm.startDate}} data-date-format='YYYY-MM-DD' class="form-control"
+                id="endDate" name="endDate" [(ngModel)]="taskForm.endDate" required/>
+            </div>
+            <!--User Start-->
+            <div class="form-group col-4">
+              <label>User</label>
+              <input type="hidden" class="form-control" id="userId" name="userId" [(ngModel)]="taskForm.userId" required
+                readonly />
+              <div class="input-group mb-3">
+                <input type="text" data-toggle="modal" data-target="#myModal" class="form-control" id="userName"
+                  name="userName" [(ngModel)]="taskForm.firstName" required readonly />
+                <div class="input-group-prepend">
+                  <span class="input-group-text" data-toggle="modal" data-target="#myModal">Search</span>
+                </div>
+              </div>
+              <!-- Modal -->
+              <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Select User</h5>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container">
+                        <input class="form-control" id="userSearch" name="userSearch" type="text"
+                          placeholder="Search..">
+                        <br>
+                        <ul class="list-group" id="userNameList" name="userNameList"
+                          *ngFor="let user of userList; let i = index">
+                          <li class="list-group-item" *ngIf="user.status == 'A'"><input type="radio"
+                              (click)="getUser(user)"
+                              data-dismiss="modal">{{user.firstName}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Model End-->
+            </div>
+            <!--User End-->
+          </div>
+          <div class="form-row">
+            <div class="form-group col-8">
+            </div>
+            <div class="form-group col-4" text-center *ngIf="taskaction == 'Add Task'">
+              <button class="btn-sm" [disabled]="!taskFormControl.form.valid" (click)="createTask()">Add Task</button>
+              <button class="btn-sm" style="float:right;" type="reset" (click)="onReset()">Reset</button>
+            </div>
+            <div class="form-group col-4" text-center *ngIf="taskaction == 'Add Parent'">
+              <button class="btn-sm" [disabled]="!task.valid" (click)="createParent()">Add Parent</button>
+              <button class="btn-sm" style="float:right;" (click)="onResetParent()">Reset</button>
+            </div>
+            <div class="form-group col-4" text-center *ngIf="taskaction == 'Update Task'">
+              <button class="btn-sm" [disabled]="!taskFormControl.form.valid" (click)="updateParent()">Update Task</button>
+              <button class="btn-sm" style="float:right;" (click)="backTaskSearch()">Back</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

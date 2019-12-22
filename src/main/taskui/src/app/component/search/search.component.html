@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <h5 class="card-header">Search Task</h5>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-12">
+                      <label>Project</label>
+                      <input type="hidden" class="form-control" id="projectId" name="projectId" [(ngModel)]="projectForm.projectId"
+                      #searchProjectId="ngModel"
+                        readonly />
+                      <div class="input-group mb-3">
+                        <input type="text" data-toggle="modal" data-target="#myModalproject" class="form-control" id="project"
+                          name="project" [(ngModel)]="projectForm.project" readonly />
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" data-toggle="modal" data-target="#myModalproject">Search</span>
+                        </div>
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" (click)="onClearProject()">Clear</span>
+                        </div>
+                      </div>
+                      <!-- Modal -->
+                      <div class="modal fade" id="myModalproject" role="dialog">
+                        <div class="modal-dialog">
+                          <!-- Modal content-->
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Select Project</h5>
+                            </div>
+                            <div class="modal-body">
+                              <div class="container">
+                                <input class="form-control" id="projectSearch" name="projectSearch" type="text"
+                                  placeholder="Search..">
+                                <br>
+                                <ul class="list-group" id="projectNameList" name="projectNameList"
+                                  *ngFor="let project of projectList; let i = index">
+                                  <li class="list-group-item" *ngIf="project.status == 'Active'"><input type="radio"
+                                      (click)="getProject(project)" data-dismiss="modal">{{project.project}}</li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Model End-->
+                    </div>
+                </div>
+                <hr/>
+                <div class="form-row">
+                    <table class="table table-bordered table-sm">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Task</th>
+                            <th>Parent</th>
+                            <th>Priority</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>
+                              <select class="form-control" id="sortId" name="sortId" required>
+                                <option value="">Sort By -</option>
+                                <option value="">Sort By - Start Date</option>
+                                <option value="">Sort By - End Date</option>
+                                <option value="">Sort By - Priority</option>
+                                <option value="">Sort By - Completed</option>
+                              </select>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let task of tasklist; let i = index">
+                          <tr *ngIf="task.projectId === searchProjectId.value">
+                            <td>{{task.task}}</td>
+                            <td>{{task.parentTask}}</td>
+                            <td>{{task.priority}}</td>
+                            <td>{{task.startDate}}</td>
+                            <td>{{task.endDate}}</td>
+                            <td *ngIf="task.status == 'A'">
+                                <button class="btn-sm" (click)="onEditTask(task)">Edit</button>
+                                <button class="btn-sm" (click)="onEndTask(task)"style="float:right;">End Task</button>
+                            </td>
+                            <td *ngIf="task.status == 'E'">
+                                <label>Task Completed</label>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

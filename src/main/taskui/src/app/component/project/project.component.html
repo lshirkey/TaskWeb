@@ -1,0 +1,142 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">{{projectaction}}</h5>
+      <div class="card-body">
+        <form #projectFormControl="ngForm">
+          <div class="form-row">
+            <div class="form-group col-4">
+              <label>Project</label>
+              <input type="hidden" class="form-control" id="projectId" name="projectId"
+                [(ngModel)]="projectForm.projectId">
+              <input type="hidden" class="form-control" id="statusId" name="statusId"
+                [(ngModel)]="projectForm.status">
+              <input type="text" class="form-control" id="project" name="project" [(ngModel)]="projectForm.project"
+                required>
+            </div>
+            <div class="form-group col-4">
+              <label>Manager</label>
+              <input type="hidden" class="form-control" id="userId"
+              name="userId" [(ngModel)]="projectForm.userId" required readonly />
+              <div class="input-group mb-3">
+                <input type="text" data-toggle="modal" data-target="#myModal" class="form-control" id="userName"
+                 name="userName" [(ngModel)]="projectForm.userName" required readonly />
+                <div class="input-group-prepend">
+                  <span class="input-group-text" data-toggle="modal" data-target="#myModal">Search</span>
+                </div>
+              </div>
+              <!-- Modal -->
+              <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Select Manager</h5>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container">
+                        <input class="form-control" id="managerSearch" name="managerSearch" type="text" placeholder="Search..">
+                        <br>
+                        <ul class="list-group" id="managerNameList" name="managerNameList" *ngFor="let user of userList; let i = index">
+                          <li class="list-group-item" *ngIf="user.status == 'A'"><input type="radio" (click)="getManager(user)" data-dismiss="modal">{{user.firstName}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Model End-->
+            </div>
+            <div class="form-group col-4">
+              <label>Priority</label>
+                <input type="range" min="1" max="30" value="0" class="form-control" id="priority" name="priority"
+                [(ngModel)]="projectForm.priority" required oninput="priorityOutputId.value = priority.value">
+                <output name="priorityOutputName" id="priorityOutputId">{{0}}</output>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-12">
+              <input type="checkbox" class="form-check-input" id="startEndDate" name="startEndDate">
+              <label class="labelext">
+                Set start and end date
+              </label>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-2">
+              <input type="date" max={{projectForm.endDate}} data-date-format='YYYY-MM-DD' class="form-control"
+                id="startDate" name="startDate" [(ngModel)]="projectForm.startDate" disabled />
+            </div>
+            <div class="form-group col-2">
+              <input type="date" min={{projectForm.startDate}} data-date-format='YYYY-MM-DD' class="form-control"
+                id="endDate" name="endDate" [(ngModel)]="projectForm.endDate" disabled />
+            </div>
+            <div class="form-group col-4"></div>
+            <div class="form-group col-4" text-center *ngIf="projectaction == 'Add Project'">
+              <button class="btn-sm" [disabled]="!projectFormControl.form.valid" (click)="createProject()">Add</button>
+              <button class="btn-sm" style="float:right;" type="reset" (click)="onReset()">Reset</button>
+            </div>
+            <div class="form-group col-4" text-center *ngIf="projectaction == 'Update Project'">
+              <button class="btn-sm" [disabled]="!projectFormControl.form.valid" (click)="updateProject()">Update</button>
+              <button class="btn-sm" style="float:right;" type="reset" (click)="cancelProject()">Cancel</button>
+            </div>
+            <div class="form-group col-4" text-center *ngIf="projectaction == 'Suspend Project'">
+              <button class="btn-sm" [disabled]="!projectFormControl.form.valid" (click)="suspendProject()">Suspend</button>
+              <button class="btn-sm" style="float:right;" type="reset" (click)="cancelProject()">Cancel</button>
+            </div>
+          </div>
+        </form>
+        <hr />
+        <div class="form-row">
+          <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+              <tr>
+                <th>Project</th>
+                <th>Priority</th>
+                <th>No. of Task</th>
+                <th>Completed</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>
+                  <select class="form-control" id="sortId" name="sortId" required>
+                    <option value="">Sort By -</option>
+                    <option value="">Sort By - Start Date</option>
+                    <option value="">Sort By - End Date</option>
+                    <option value="">Sort By - Priority</option>
+                    <option value="">Sort By - Completed</option>
+                  </select>
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let project of projectList; let i = index">
+              <tr *ngIf="i == 0">
+                <td><input type="text" class="form-control" id="sfirstName" name="sfirstName" /></td>
+                <td><input type="text" class="form-control" id="slastName" name="slastName" /></td>
+                <td><input type="text" class="form-control" id="semployeeId" name="semployeeId" /></td>
+                <td><input type="text" class="form-control" id="sfirstName1" name="sfirstName" /></td>
+                <td><input type="text" class="form-control" id="slastName1" name="slastName" /></td>
+                <td><input type="text" class="form-control" id="semployeeId1" name="semployeeId" /></td>
+                <td><input type="text" class="form-control" id="semployeeId2" name="semployeeId" /></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{{project.project}}</td>
+                <td>{{project.priority}}</td>
+                <td></td>
+                <td></td>
+                <td>{{project.startDate}}</td>
+                <td>{{project.endDate}}</td>
+                <td>{{project.status}}</td>
+                <td>
+                  <button class="btn-sm" (click)="onEditProject(project)">Update</button>
+                  <button class="btn-sm" (click)="onSuspendProject(project)"style="float:right;">Suspend</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

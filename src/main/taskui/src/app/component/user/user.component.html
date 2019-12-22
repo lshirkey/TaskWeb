@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">{{useraction}}</h5>
+      <div class="card-body">
+        <form #createUserForm="ngForm">
+          <div class="form-row">
+            <div class="form-group col-4">
+              <label>First Name</label>
+              <input type="hidden" class="form-control" id="userId" name="userId" [(ngModel)]="userform.userId">
+              <input type="hidden" class="form-control" id="statusId" name="statusId" [(ngModel)]="userform.status">
+              <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="userform.firstName"
+                required>
+            </div>
+            <div class="form-group col-4">
+              <label>Last Name</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="userform.lastName"
+                required />
+            </div>
+            <div class="form-group col-4">
+              <label>Employee Id</label>
+              <input type="text" class="form-control" id="employeeId" name="employeeId"
+                [(ngModel)]="userform.employeeId" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-8"></div>
+            <div class="form-group col-4" text-center *ngIf="useraction == 'Add User'">
+              <button class="btn-sm" [disabled]="!createUserForm.form.valid" (click)="createUser()">Add</button>
+              <button class="btn-sm" style="float:right;" type="reset" (click)="onReset()">Reset</button>
+            </div>
+            <div class="form-group col-4" text-center *ngIf="useraction == 'Update User'">
+              <button class="btn-sm" [disabled]="!createUserForm.form.valid" (click)="updateUser()">Update</button>
+              <button class="btn-sm" style="float:right;" type="reset" (click)="cancelEdit()">Cancel</button>
+            </div>
+            <div class="form-group col-4" text-center *ngIf="useraction == 'Delete User'">
+              <button class="btn-sm" [disabled]="!createUserForm.form.valid" (click)="deleteUser()">Delete</button>
+              <button class="btn-sm" style="float:right;" type="reset" (click)="cancelDelete()">Cancel</button>
+            </div>
+          </div>
+        </form>
+        <hr />
+        <div class="form-row">
+          <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+              <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Employee Id</th>
+                <th>
+                  <select class="form-control" id="sortId" name="sortId" [(ngModel)]="usersearch.sortId">
+                    <option value="0">Sort By -</option>
+                    <option value="1">Sort By - First Name</option>
+                    <option value="2">Sort By - Last Name</option>
+                    <option value="3">Sort By - Employee Id</option>
+                  </select>
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let user of userList; let i = index"> 
+              <tr *ngIf="i == 0">
+                <td><input (focusout)="doFilter()" type="text" class="form-control" id="firstName1" name="firstName"
+                    [(ngModel)]="usersearch.firstName" /></td>
+                <td><input (keyup)="doFilter()" type="text" class="form-control" id="lastName1" name="lastName"
+                    [(ngModel)]="usersearch.lastName" /></td>
+                <td><input (keyup)="doFilter()" type="text" class="form-control" id="employeeId1" name="employeeId"
+                    [(ngModel)]="usersearch.employeeId" /></td>
+                <td></td>
+              </tr>
+              <tr *ngIf="user.status == 'A'">
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.employeeId}}</td>
+                <td>
+                  <button class="btn-sm" (click)="onEditUser(user)">Edit</button>
+                  <button class="btn-sm" (click)="onDeleteUser(user)" style="float:right;">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+                      <!--
+                      <form>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">First Name</span>
+                          </div>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Last Name</span>
+                          </div>
+                          <input type="text" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Employee Id</span>
+                          </div>
+                          <input type="text" class="form-control">
+                        </div>                        
+                      </form>
+                      -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
