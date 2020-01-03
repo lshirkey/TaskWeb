@@ -16,6 +16,6 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>TaskWeb</finalName>
+    <finalName>task</finalName>
   </build>
 </project>
