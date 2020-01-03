@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ProjectService {
 
-  private SERVER_URL = 'http://localhost:8080';
+  private SERVER_URL = 'http://localhost:8080/taskapi';
 
   constructor(private httpClient: HttpClient) { }
 
