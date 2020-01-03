@@ -99,7 +99,7 @@
                 <th>End Date</th>
                 <th>Status</th>
                 <th>
-                  <select class="form-control" id="sortId" name="sortId" required>
+                  <select class="form-control" id="sortId" name="sortId">
                     <option value="">Sort By -</option>
                     <option value="">Sort By - Start Date</option>
                     <option value="">Sort By - End Date</option>
@@ -108,9 +108,8 @@
                   </select>
                 </th>
               </tr>
-            </thead>
-            <tbody *ngFor="let project of projectList; let i = index">
-              <tr *ngIf="i == 0">
+              <!--
+              <tr>
                 <td><input type="text" class="form-control" id="sfirstName" name="sfirstName" /></td>
                 <td><input type="text" class="form-control" id="slastName" name="slastName" /></td>
                 <td><input type="text" class="form-control" id="semployeeId" name="semployeeId" /></td>
@@ -120,11 +119,14 @@
                 <td><input type="text" class="form-control" id="semployeeId2" name="semployeeId" /></td>
                 <td></td>
               </tr>
+              -->
+            </thead>
+            <tbody *ngFor="let project of projectList">
               <tr>
                 <td>{{project.project}}</td>
                 <td>{{project.priority}}</td>
-                <td></td>
-                <td></td>
+                <td>{{project.taskCount}}</td>
+                <td>{{project.taskCompleted}}</td>
                 <td>{{project.startDate}}</td>
                 <td>{{project.endDate}}</td>
                 <td>{{project.status}}</td>

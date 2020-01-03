@@ -48,25 +48,23 @@
                 <th>Last name</th>
                 <th>Employee Id</th>
                 <th>
-                  <select class="form-control" id="sortId" name="sortId" [(ngModel)]="usersearch.sortId">
-                    <option value="0">Sort By -</option>
+                  <select class="form-control" id="sortId" name="sortId" [(ngModel)]="sortId">
                     <option value="1">Sort By - First Name</option>
                     <option value="2">Sort By - Last Name</option>
                     <option value="3">Sort By - Employee Id</option>
                   </select>
                 </th>
               </tr>
-            </thead>
-            <tbody *ngFor="let user of userList; let i = index"> 
-              <tr *ngIf="i == 0">
-                <td><input (focusout)="doFilter()" type="text" class="form-control" id="firstName1" name="firstName"
-                    [(ngModel)]="usersearch.firstName" /></td>
-                <td><input (keyup)="doFilter()" type="text" class="form-control" id="lastName1" name="lastName"
-                    [(ngModel)]="usersearch.lastName" /></td>
-                <td><input (keyup)="doFilter()" type="text" class="form-control" id="employeeId1" name="employeeId"
-                    [(ngModel)]="usersearch.employeeId" /></td>
+              <tr>
+                <td><input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchFirstName" /></td>
+                <td><input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchLastName" /></td>
+                <td><input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchEmployeeId" /></td>
                 <td></td>
               </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tbody *ngFor="let user of userList | userpipe : searchFirstName: searchLastName: searchEmployeeId"> 
               <tr *ngIf="user.status == 'A'">
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
@@ -78,28 +76,6 @@
               </tr>
             </tbody>
           </table>
-                      <!--
-                      <form>
-                        <div class="input-group mb-3">
-                          <input type="text" class="form-control">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">First Name</span>
-                          </div>
-                        </div>
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">Last Name</span>
-                          </div>
-                          <input type="text" class="form-control">
-                        </div>
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">Employee Id</span>
-                          </div>
-                          <input type="text" class="form-control">
-                        </div>                        
-                      </form>
-                      -->
         </div>
       </div>
     </div>

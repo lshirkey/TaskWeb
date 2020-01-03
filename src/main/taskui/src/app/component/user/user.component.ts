@@ -12,7 +12,6 @@ export class UserComponent implements OnInit {
   userform = new User();
   userList = [];
   useraction = 'Add User';
-  usersearch = new User();
 
   constructor(private userService: UserService) { }
 
@@ -71,9 +70,5 @@ export class UserComponent implements OnInit {
   cancelDelete() {
     this.useraction = 'Add User';
     this.onReset();
-  }
-
-  doFilter() {
-    alert('Test');
   }
 }

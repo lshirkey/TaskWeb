@@ -28,8 +28,8 @@ export class TaskService {
     {headers: new HttpHeaders().set('Content-Type', 'application/json')});
   }
 
-  public getTask(taskId) {
-    return this.httpClient.post(this.SERVER_URL + '/getTask', taskId,
+  public getTask(task) {
+    return this.httpClient.post(this.SERVER_URL + '/viewTask', task,
     {headers: new HttpHeaders().set('Content-Type', 'application/json')});
   }
 }

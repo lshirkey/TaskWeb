@@ -2,7 +2,7 @@ export class User {
     userId: number;
     firstName: string;
     lastName: string;
-    employeeId: number;
+    employeeId: string;
     sortId: number;
     status: string;
 }

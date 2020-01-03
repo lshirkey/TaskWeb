@@ -8,6 +8,7 @@ import { SearchComponent } from './component/search/search.component';
 import { TaskComponent } from './component/task/task.component';
 import { ProjectComponent } from './component/project/project.component';
 import { UserComponent } from './component/user/user.component';
+import { UserpipePipe } from './pipe/userpipe.pipe';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { UserComponent } from './component/user/user.component';
     SearchComponent,
     TaskComponent,
     ProjectComponent,
-    UserComponent
+    UserComponent,
+    UserpipePipe
   ],
   imports: [
     BrowserModule,

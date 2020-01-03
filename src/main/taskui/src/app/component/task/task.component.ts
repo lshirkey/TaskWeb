@@ -27,6 +27,7 @@ export class TaskComponent implements OnInit {
   taskaction = 'Add Task';
   manager = new User();
   editTaskId = null;
+  updateTask = new Task();
   format = 'yyyy-MM-dd';
   todayDate = new Date();
   nextDate = new Date(this.todayDate.getTime() + (1000 * 60 * 60 * 24));
@@ -150,8 +151,9 @@ export class TaskComponent implements OnInit {
   getTask(taskId) {
     this.editTaskId = taskId;
     if (!isNull(this.editTaskId)) {
+      this.updateTask.taskId = this.editTaskId;
       this.taskaction = 'Update Task';
-      this.taskService.getTask(taskId).subscribe((temp: Task) => {
+      this.taskService.getTask(this.updateTask).subscribe((temp: Task) => {
       this.taskForm = temp;
      });
     }
