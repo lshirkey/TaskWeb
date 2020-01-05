@@ -26,7 +26,10 @@
                 <input type="text" data-toggle="modal" data-target="#myModalproject" class="form-control" id="project"
                   name="project" [(ngModel)]="taskForm.project" required readonly />
                 <div class="input-group-prepend">
+                  <button id="searchProject" name="searchProject" class="btn-sm" data-toggle="modal" data-target="#myModalproject">Search</button>
+                  <!--
                   <span class="input-group-text" data-toggle="modal" data-target="#myModalproject">Search</span>
+                  -->
                 </div>
               </div>
               <!-- Modal -->
@@ -59,7 +62,7 @@
               <label>Priority</label>
               <input type="range" min="1" max="30" value="0" class="form-control" id="priority" name="priority"
                 [(ngModel)]="taskForm.priority" required oninput="priorityOutputId.value = priority.value">
-              <output name="priorityOutputName" id="priorityOutputId">{{0}}</output>
+              <output name="priorityOutputName" id="priorityOutputId">{{taskForm.priority}}</output>
             </div>
           </div>
           <div class="form-row">
@@ -72,7 +75,10 @@
                 <input type="text" data-toggle="modal" data-target="#myModalParent" class="form-control" id="parentTask"
                   name="parentTask" [(ngModel)]="taskForm.parentTask" readonly />
                 <div class="input-group-prepend">
+                  <button id="searchParentTask" name="searchParentTask" class="btn-sm" data-toggle="modal" data-target="#myModalParent">Search</button>
+                  <!--
                   <span class="input-group-text" data-toggle="modal" data-target="#myModalParent">Search</span>
+                  -->
                 </div>
               </div>
               <!-- Modal -->
@@ -121,7 +127,10 @@
                 <input type="text" data-toggle="modal" data-target="#myModal" class="form-control" id="userName"
                   name="userName" [(ngModel)]="taskForm.firstName" required readonly />
                 <div class="input-group-prepend">
+                  <button id="searchUser" name="searchUser" class="btn-sm" data-toggle="modal" data-target="#myModal">Search</button>
+                  <!--
                   <span class="input-group-text" data-toggle="modal" data-target="#myModal">Search</span>
+                  -->
                 </div>
               </div>
               <!-- Modal -->
@@ -160,8 +169,8 @@
               <button class="btn-sm" style="float:right;" type="reset" (click)="onReset()">Reset</button>
             </div>
             <div class="form-group col-4" text-center *ngIf="taskaction == 'Add Parent'">
-              <button class="btn-sm" [disabled]="!task.valid" (click)="createParent()">Add Parent</button>
-              <button class="btn-sm" style="float:right;" (click)="onResetParent()">Reset</button>
+                <button class="btn-sm" id ="btnAddParent" name="btnAddParent" (click)="createParent()" disabled>Add Parent</button>
+                <button class="btn-sm" style="float:right;" (click)="onResetParent()">Reset</button>
             </div>
             <div class="form-group col-4" text-center *ngIf="taskaction == 'Update Task'">
               <button class="btn-sm" [disabled]="!taskFormControl.form.valid" (click)="updateParent()">Update Task</button>

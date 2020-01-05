@@ -34,3 +34,7 @@ label {
 .input-group-text {
   height: 25.19px;
 }
+.btn-sm {
+  padding: .0rem .5rem;
+  border-radius: 0px;
+}

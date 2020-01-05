@@ -56,6 +56,10 @@
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>
+                              <select class="form-control" id="sortId" name="sortId" [(ngModel)] = "sortColumn" (change)="sortUserViewTable()">
+                                <option *ngFor = 'let option of optionSortDropDown' [value]='option.value'>{{option.display}}</option>
+                              </select>
+                              <!--
                               <select class="form-control" id="sortId" name="sortId" required>
                                 <option value="">Sort By -</option>
                                 <option value="">Sort By - Start Date</option>
@@ -63,6 +67,7 @@
                                 <option value="">Sort By - Priority</option>
                                 <option value="">Sort By - Completed</option>
                               </select>
+                              -->
                             </th>
                           </tr>
                         </thead>
@@ -74,7 +79,7 @@
                             <td>{{task.startDate}}</td>
                             <td>{{task.endDate}}</td>
                             <td *ngIf="task.status == 'A'">
-                                <button class="btn-sm" (click)="onEditTask(task)">Edit</button>
+                                <button class="btn-sm" (click)="onEditTask(task)">Update</button>
                                 <button class="btn-sm" (click)="onEndTask(task)"style="float:right;">End Task</button>
                             </td>
                             <td *ngIf="task.status == 'E'">

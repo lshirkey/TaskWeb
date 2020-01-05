@@ -11,6 +11,7 @@ import { Parent } from '../../model/parent';
 import { TaskService } from '../../service/task.service';
 import { ActivatedRoute } from '@angular/router';
 import { isNull } from 'util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task',
@@ -34,29 +35,32 @@ export class TaskComponent implements OnInit {
   locale = 'en-US';
   defaultStartDate = formatDate(this.todayDate, this.format, this.locale);
   defaultEndDate = formatDate(this.nextDate, this.format, this.locale);
-
+  searchProject = new Project();
+  newPriority = -1;
   constructor(private userService: UserService, private projectService: ProjectService,
               private parenttaskService: ParenttaskService, private taskService: TaskService,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
 
     this.activatedRoute.paramMap.subscribe(params => {
+      this.searchProject.projectId = Number(params.get('projectId'));
+      this.searchProject.project =  params.get('project');
       this.getTask(params.get('taskId'));
     });
 
-    this.projectService.searchProjectList().subscribe((temp: any[]) => {
-      this.projectList = temp;
-    });
-    this.userService.searchUserList().subscribe((temp: any[]) => {
-      this.userList = temp;
-    });
-    this.parenttaskService.searchParentList().subscribe((temp: any[]) => {
-      this.parentList = temp;
-    });
-
+    // this.projectService.searchProjectList().subscribe((temp: any[]) => {
+    //   this.projectList = temp;
+    // });
+    // this.userService.searchUserList().subscribe((temp: any[]) => {
+    //   this.userList = temp;
+    // });
+    // this.parenttaskService.searchParentList().subscribe((temp: any[]) => {
+    //   this.parentList = temp;
+    // });
+    this.loadData();
     $(document).ready(() => {
-      this.taskForm.priority = 0;
+      // this.taskForm.priority = 0;
       this.taskForm.startDate = this.defaultStartDate;
       $('#startDate').prop('value', this.defaultStartDate);
       this.taskForm.endDate = this.defaultEndDate;
@@ -71,6 +75,9 @@ export class TaskComponent implements OnInit {
           $('#startDate').prop('disabled', true);
           $('#endDate').prop('disabled', true);
           $('#userName').prop('disabled', true);
+          $('#searchProject').prop('disabled', true);
+          $('#searchParentTask').prop('disabled', true);
+          $('#searchUser').prop('disabled', true);
         } else {
           this.taskaction = 'Add Task';
           $('#project').prop('disabled', false);
@@ -79,9 +86,23 @@ export class TaskComponent implements OnInit {
           $('#startDate').prop('disabled', false);
           $('#endDate').prop('disabled', false);
           $('#userName').prop('disabled', false);
+          $('#searchProject').prop('disabled', false);
+          $('#searchParentTask').prop('disabled', false);
+          $('#searchUser').prop('disabled', false);
         }
       });
-      this.onReset();
+
+      $('#task').change(() => {
+        if ($('#task').val() !== '') {
+          $('#btnAddParent').prop('disabled', false);
+        } else {
+          $('#btnAddParent').prop('disabled', true);
+        }
+      });
+
+      if (isNull(this.searchProject.projectId)) {
+        this.onReset();
+      }
     });
 
     // Model user search filter
@@ -114,6 +135,17 @@ export class TaskComponent implements OnInit {
       $('#parentDiv *').prop('disabled', true);
     }
   }
+  loadData() {
+    this.projectService.searchProjectList().subscribe((temp: any[]) => {
+      this.projectList = temp;
+    });
+    this.userService.searchUserList().subscribe((temp: any[]) => {
+      this.userList = temp;
+    });
+    this.parenttaskService.searchParentList().subscribe((temp: any[]) => {
+      this.parentList = temp;
+    });
+  }
   createTask() {
     this.taskForm.status = 'A';
     this.taskService.createParent(this.taskForm).subscribe(_ => {
@@ -140,6 +172,7 @@ export class TaskComponent implements OnInit {
   }
   onReset() {
     this.taskForm = new Task();
+    this.loadData();
   }
   onResetParent() {
     this.taskForm.task = null;
@@ -164,5 +197,10 @@ export class TaskComponent implements OnInit {
     this.taskService.updateParent(this.taskForm).subscribe(_ => {
       this.onReset();
     });
+    this.router.navigate(['/search', this.searchProject]);
+  }
+
+  backTaskSearch() {
+    this.router.navigate(['/search', this.searchProject]);
   }
 }

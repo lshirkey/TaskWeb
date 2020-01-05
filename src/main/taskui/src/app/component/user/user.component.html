@@ -48,30 +48,29 @@
                 <th>Last name</th>
                 <th>Employee Id</th>
                 <th>
-                  <select class="form-control" id="sortId" name="sortId" [(ngModel)]="sortId">
-                    <option value="1">Sort By - First Name</option>
-                    <option value="2">Sort By - Last Name</option>
-                    <option value="3">Sort By - Employee Id</option>
-                  </select>
                 </th>
               </tr>
               <tr>
                 <td><input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchFirstName" /></td>
                 <td><input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchLastName" /></td>
                 <td><input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchEmployeeId" /></td>
-                <td></td>
+                <td>
+                  <select class="form-control" id="sortId" name="sortId" [(ngModel)] = "sortColumn" (change)="sortUserViewTable()">
+                    <option *ngFor = 'let option of optionSortDropDown' [value]='option.value'>{{option.display}}</option>
+                  </select>
+                </td>
               </tr>
             </thead>
             <tbody>
             </tbody>
-            <tbody *ngFor="let user of userList | userpipe : searchFirstName: searchLastName: searchEmployeeId"> 
+            <tbody *ngFor="let user of userList | userpipe : searchFirstName: searchLastName: searchEmployeeId: sortColumn"> 
               <tr *ngIf="user.status == 'A'">
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.employeeId}}</td>
                 <td>
-                  <button class="btn-sm" (click)="onEditUser(user)">Edit</button>
-                  <button class="btn-sm" (click)="onDeleteUser(user)" style="float:right;">Delete</button>
+                  <button class="btn-sm" (click)="onEditUser(user)">Update</button>
+                  <button class="btn-sm deleteuserview" id='deleteuserview' name='deleteuserview' (click)="onDeleteUser(user)" style="float:right;">Delete</button>
                 </td>
               </tr>
             </tbody>

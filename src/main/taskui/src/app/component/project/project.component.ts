@@ -19,6 +19,14 @@ export class ProjectComponent implements OnInit {
   projectaction = 'Add Project';
   manager = new User();
 
+  sortColumn = 'projectId';
+  optionSortDropDown = [
+    {value : 'projectId', display : 'Sort By - '},
+    {value : 'startDate', display : 'Sort By - Start Date'},
+    {value : 'endDate', display : 'Sort By - End Date'},
+    {value : 'priority', display : 'Sort By - Priority'},
+    {value : 'taskCompleted', display : 'Sort By - Task Completed'}];
+
   format = 'yyyy-MM-dd';
   todayDate = new Date();
   nextDate = new Date(this.todayDate.getTime() + (1000 * 60 * 60 * 24));
@@ -82,6 +90,7 @@ export class ProjectComponent implements OnInit {
     this.projectService.updateProject(this.projectForm).subscribe(_ => {
       this.onReset();
       this.reload();
+      this.projectaction = 'Add Project';
     });
   }
   suspendProject() {
@@ -89,6 +98,7 @@ export class ProjectComponent implements OnInit {
     this.projectService.updateProject(this.projectForm).subscribe(_ => {
       this.onReset();
       this.reload();
+      this.projectaction = 'Add Project';
     });
   }
   reload() {
@@ -110,5 +120,18 @@ export class ProjectComponent implements OnInit {
   cancelProject() {
     this.projectaction = 'Add Project';
     this.onReset();
+  }
+  sortUserViewTable() {
+    if (this.sortColumn === 'projectId') {
+      this.projectList = this.projectList.sort((one, two) => (one.projectId > two.projectId ? 1 : -1));
+    } else if (this.sortColumn === 'priority') {
+      this.projectList = this.projectList.sort((one, two) => (one.priority > two.priority ? 1 : -1));
+    } else if (this.sortColumn === 'taskCompleted') {
+      this.projectList = this.projectList.sort((one, two) => (one.taskCompleted > two.taskCompleted ? 1 : -1));
+    } else if (this.sortColumn === 'startDate') {
+      this.projectList = this.projectList.sort((one, two) => (one.startDate > two.startDate ? 1 : -1));
+    } else if (this.sortColumn === 'endDate') {
+      this.projectList = this.projectList.sort((one, two) => (one.endDate > two.endDate ? 1 : -1));
+    }
   }
 }

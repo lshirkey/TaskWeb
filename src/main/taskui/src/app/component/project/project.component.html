@@ -94,17 +94,22 @@
                 <th>Project</th>
                 <th>Priority</th>
                 <th>No. of Task</th>
-                <th>Completed</th>
+                <th>Task Completed</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Status</th>
                 <th>
+                  <!--
                   <select class="form-control" id="sortId" name="sortId">
                     <option value="">Sort By -</option>
                     <option value="">Sort By - Start Date</option>
                     <option value="">Sort By - End Date</option>
                     <option value="">Sort By - Priority</option>
                     <option value="">Sort By - Completed</option>
+                  </select>
+                  -->
+                  <select class="form-control" id="sortId" name="sortId" [(ngModel)] = "sortColumn" (change)="sortUserViewTable()">
+                    <option *ngFor = 'let option of optionSortDropDown' [value]='option.value'>{{option.display}}</option>
                   </select>
                 </th>
               </tr>

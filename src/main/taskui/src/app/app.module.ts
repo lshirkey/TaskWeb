@@ -9,6 +9,7 @@ import { TaskComponent } from './component/task/task.component';
 import { ProjectComponent } from './component/project/project.component';
 import { UserComponent } from './component/user/user.component';
 import { UserpipePipe } from './pipe/userpipe.pipe';
+import { SortuserpipePipe } from './pipe/sortuserpipe.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { UserpipePipe } from './pipe/userpipe.pipe';
     TaskComponent,
     ProjectComponent,
     UserComponent,
-    UserpipePipe
+    UserpipePipe,
+    SortuserpipePipe
   ],
   imports: [
     BrowserModule,
